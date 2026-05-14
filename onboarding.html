@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-store, private" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <title>Complete your profile | Elite Bot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tom Select -->
+  <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+  <style>
+    /* ── Design tokens ─────────────────────────────────────────── */
+    :root {
+      --bg:          #f5f5f0;
+      --bg-soft:     #efefe9;
+      --panel:       #ffffff;
+      --border:      rgba(0,0,0,0.09);
+      --text:        #0d0d0d;
+      --muted:       rgba(13,13,13,0.52);
+      --accent:      #000000;
+      --accent-soft: rgba(0,0,0,0.06);
+      --ok:          #1f7a4d;
+      --surface:     rgba(0,0,0,0.04);
+      --chip-border: rgba(0,0,0,0.10);
+      --shadow-btn:  0 1px 3px rgba(0,0,0,0.18);
+      --shadow-card: 0 2px 16px rgba(0,0,0,0.08);
+      --radius-sm:   12px;
+      --radius-md:   18px;
+    }
+
+    [data-theme="dark"] {
+      --bg:          #212121;
+      --bg-soft:     #1b1b1b;
+      --panel:       #2a2a2a;
+      --border:      rgba(255,255,255,0.08);
+      --text:        #ececec;
+      --muted:       rgba(236,236,236,0.50);
+      --accent:      #ffffff;
+      --accent-soft: rgba(255,255,255,0.08);
+      --ok:          #7ad29c;
+      --surface:     rgba(255,255,255,0.05);
+      --chip-border: rgba(255,255,255,0.10);
+      --shadow-btn:  0 1px 3px rgba(0,0,0,0.40);
+      --shadow-card: 0 2px 24px rgba(0,0,0,0.30);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) {
+        --bg: #212121; --bg-soft: #1b1b1b; --panel: #2a2a2a;
+        --border: rgba(255,255,255,0.08); --text: #ececec;
+        --muted: rgba(236,236,236,0.50); --accent: #ffffff;
+        --accent-soft: rgba(255,255,255,0.08); --ok: #7ad29c;
+        --surface: rgba(255,255,255,0.05); --chip-border: rgba(255,255,255,0.10);
+        --shadow-btn: 0 1px 3px rgba(0,0,0,0.40);
+        --shadow-card: 0 2px 24px rgba(0,0,0,0.30);
+      }
+    }
+
+    /* ── Reset ─────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Manrope", "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Top bar ───────────────────────────────────────────────── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .topbar-logo {
+      height: 30px;
+      width: auto;
+      display: block;
+    }
+    /* Logo light/dark logic */
+    .logo-dark  { display: block; }
+    .logo-light { display: none;  }
+    [data-theme="dark"] .logo-dark  { display: none;  }
+    [data-theme="dark"] .logo-light { display: block; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) .logo-dark  { display: none;  }
+      :root:not([data-theme]) .logo-light { display: block; }
+    }
+    .back-link {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .back-link:hover { background: var(--surface); color: var(--text); }
+
+    /* ── Theme switcher ────────────────────────────────────────── */
+    .theme-switcher {
+      display: flex;
+      gap: 2px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px;
+    }
+    .theme-btn {
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .theme-btn.active { background: var(--panel); color: var(--text); box-shadow: var(--shadow-btn); }
+
+    /* ── Page layout ───────────────────────────────────────────── */
+    .page-body {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 40px 20px 64px;
+    }
+
+    /* ── Progress ──────────────────────────────────────────────── */
+    .progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .progress-step {
+      width: 28px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--border);
+      transition: background 0.2s;
+    }
+    .progress-step.done { background: var(--accent); opacity: 0.35; }
+    .progress-step.active { background: var(--accent); opacity: 1; }
+    .progress-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-left: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Page heading ──────────────────────────────────────────── */
+    .page-heading {
+      margin-bottom: 28px;
+    }
+    .page-heading h1 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(24px, 4vw, 32px);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .page-heading p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── Card ──────────────────────────────────────────────────── */
+    .form-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 28px 28px 32px;
+      box-shadow: var(--shadow-card);
+    }
+    @media (max-width: 480px) {
+      .form-card { padding: 20px 18px 24px; }
+    }
+
+    /* ── Mobile improvements ───────────────────────────────────── */
+    @media (max-width: 600px) {
+      .page-body {
+        padding: 28px max(16px, env(safe-area-inset-right, 16px)) max(56px, env(safe-area-inset-bottom, 56px)) max(16px, env(safe-area-inset-left, 16px));
+      }
+      /* 16px prevents iOS auto-zoom on focus */
+      input[type="number"],
+      input[type="tel"] {
+        font-size: 16px;
+        min-height: 48px;
+      }
+      .btn-submit {
+        min-height: 50px;
+        font-size: 15px;
+        touch-action: manipulation;
+      }
+      /* Topbar safe areas */
+      .topbar {
+        padding-left:  max(16px, env(safe-area-inset-left, 16px));
+        padding-right: max(16px, env(safe-area-inset-right, 16px));
+      }
+      .back-link { font-size: 12px; }
+      .theme-btn { padding: 5px 9px; font-size: 11px; }
+    }
+    @media (max-width: 400px) {
+      .row { grid-template-columns: 1fr; }
+    }
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    /* ── Form fields ───────────────────────────────────────────── */
+    .fields { display: flex; flex-direction: column; gap: 18px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    input[type="number"],
+    input[type="tel"] {
+      width: 100%;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      padding: 12px 14px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      box-shadow: var(--shadow-btn);
+      outline: none;
+      -webkit-appearance: none;
+    }
+    input[type="number"]:focus,
+    input[type="tel"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+    input::placeholder { color: var(--muted); }
+    /* Remove number spinners */
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type="number"] { -moz-appearance: textfield; }
+
+    /* ── Submit button ─────────────────────────────────────────── */
+    .btn-submit {
+      width: 100%;
+      margin-top: 24px;
+      padding: 14px 20px;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+      box-shadow: var(--shadow-btn);
+    }
+    .btn-submit:hover:not(:disabled) { opacity: 0.88; }
+    .btn-submit:active:not(:disabled) { transform: scale(0.98); }
+    .btn-submit:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    /* ── Message ───────────────────────────────────────────────── */
+    .message {
+      margin-top: 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #c0392b;
+      min-height: 20px;
+    }
+    .message.ok { color: var(--ok); }
+
+    /* ── Legal note ────────────────────────────────────────────── */
+    .legal-note {
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.6;
+    }
+    .legal-note a { color: var(--muted); font-weight: 600; }
+    .legal-note a:hover { color: var(--text); }
+
+    /* ────────────────────────────────────────────────────────────
+       Tom Select — override to match design system
+       ──────────────────────────────────────────────────────────── */
+
+    /* Wrapper takes full width */
+    .ts-wrapper { width: 100%; }
+
+    /* The visible control (looks like an input) */
+    .ts-control {
+      background: var(--bg-soft) !important;
+      border: 1px solid var(--border) !important;
+      border-radius: var(--radius-sm) !important;
+      color: var(--text) !important;
+      font-family: "Manrope", "Segoe UI", Arial, sans-serif !important;
+      font-size: 14px !important;
+      padding: 11px 40px 11px 14px !important;
+      box-shadow: var(--shadow-btn) !important;
+      min-height: 46px !important;
+      cursor: pointer !important;
+      display: flex !important;
+      align-items: center !important;
+      flex-wrap: nowrap !important;
+    }
+    .ts-control.focus,
+    .input-active .ts-control {
+      border-color: var(--accent) !important;
+      box-shadow: 0 0 0 3px var(--accent-soft) !important;
+      outline: none !important;
+    }
+
+    /* Selected item text */
+    .ts-control .item {
+      color: var(--text) !important;
+      font-size: 14px !important;
+      line-height: 1.5 !important;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Search input inside the control */
+    .ts-control input {
+      color: var(--text) !important;
+      font-family: inherit !important;
+      font-size: 14px !important;
+      background: transparent !important;
+      flex: 1 !important;
+      min-width: 0 !important;
+    }
+    .ts-control input::placeholder { color: var(--muted) !important; }
+
+    /* Caret arrow — Tom Select injects ::after on the wrapper for single selects */
+    .ts-wrapper.single .ts-control::after {
+      border-color: var(--text) transparent transparent transparent !important;
+    }
+    .ts-wrapper.single.dropdown-active .ts-control::after {
+      border-color: transparent transparent var(--text) transparent !important;
+    }
+
+    /* Dropdown panel */
+    .ts-dropdown {
+      background: var(--panel) !important;
+      border: 1px solid var(--border) !important;
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm) !important;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.12) !important;
+      font-family: "Manrope", "Segoe UI", Arial, sans-serif !important;
+      font-size: 14px !important;
+      z-index: 500 !important;
+      overflow: hidden !important;
+    }
+    [data-theme="dark"] .ts-dropdown {
+      box-shadow: 0 8px 28px rgba(0,0,0,0.45) !important;
+    }
+
+    /* Search input row at top of dropdown */
+    .ts-dropdown .ts-dropdown-content { max-height: 220px; overflow-y: auto; }
+
+    /* Options */
+    .ts-dropdown .option {
+      padding: 10px 14px !important;
+      color: var(--text) !important;
+      cursor: pointer !important;
+      transition: background 0.1s !important;
+    }
+    .ts-dropdown .option.active,
+    .ts-dropdown .option:hover {
+      background: var(--surface) !important;
+      color: var(--text) !important;
+    }
+    .ts-dropdown .option.selected {
+      background: var(--accent-soft) !important;
+      color: var(--text) !important;
+      font-weight: 600 !important;
+    }
+    .ts-dropdown .option.selected.active {
+      background: var(--surface) !important;
+    }
+    .ts-dropdown .no-results {
+      padding: 10px 14px !important;
+      color: var(--muted) !important;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <!-- dark logo (El light.png) for light mode; white logo (EL 1.png) for dark mode -->
+      <img src="assets/El light.png" alt="Elite Bot" class="topbar-logo logo-dark" />
+      <img src="assets/EL 1.png"     alt="Elite Bot" class="topbar-logo logo-light" />
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a href="landing.html" class="back-link">&#8592; Back</a>
+      <div class="theme-switcher" role="group" aria-label="Theme">
+        <button class="theme-btn" type="button" data-theme-mode="system">System</button>
+        <button class="theme-btn active" type="button" data-theme-mode="light">Light</button>
+        <button class="theme-btn" type="button" data-theme-mode="dark">Dark</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-body">
+
+    <!-- Progress indicator -->
+    <div class="progress-wrap" aria-label="Step 2 of 2">
+      <div class="progress-step done"></div>
+      <div class="progress-step active"></div>
+      <span class="progress-label">Step 2 of 2</span>
+    </div>
+
+    <!-- Heading -->
+    <div class="page-heading">
+      <h1>Complete your profile</h1>
+      <p>Help us personalise your experience at UDS. This takes under a minute.</p>
+    </div>
+
+    <!-- Form card -->
+    <div class="form-card">
+      <form id="onboarding-form" novalidate>
+        <div class="fields">
+
+          <div class="row">
+            <!-- Age -->
+            <div class="field">
+              <label for="age">Age</label>
+              <input id="age" type="number" min="13" max="90"
+                     placeholder="e.g. 22" required autocomplete="off" />
+            </div>
+            <!-- Level -->
+            <div class="field">
+              <label for="level">Academic level</label>
+              <select id="level" required>
+                <option value="">Select level</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="300">300</option>
+                <option value="400">400</option>
+                <option value="500">500</option>
+                <option value="600">600</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div class="field">
+            <label for="phone">Mobile number</label>
+            <input id="phone" type="tel" autocomplete="tel"
+                   placeholder="e.g. 0241234567"
+                   pattern="[0-9+\s\-]{7,15}" required />
+          </div>
+
+          <div class="row">
+            <!-- Gender -->
+            <div class="field">
+              <label for="gender">Gender</label>
+              <select id="gender" required>
+                <option value="">Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other / prefer not to say</option>
+              </select>
+            </div>
+            <!-- Region -->
+            <div class="field">
+              <label for="region">Region of stay</label>
+              <select id="region" required>
+                <option value="">Select region</option>
+                <option value="Ahafo">Ahafo</option>
+                <option value="Ashanti">Ashanti</option>
+                <option value="Bono">Bono</option>
+                <option value="Bono East">Bono East</option>
+                <option value="Central">Central</option>
+                <option value="Eastern">Eastern</option>
+                <option value="Greater Accra">Greater Accra</option>
+                <option value="North East">North East</option>
+                <option value="Northern">Northern</option>
+                <option value="Oti">Oti</option>
+                <option value="Savannah">Savannah</option>
+                <option value="Upper East">Upper East</option>
+                <option value="Upper West">Upper West</option>
+                <option value="Volta">Volta</option>
+                <option value="Western">Western</option>
+                <option value="Western North">Western North</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Course of study -->
+          <div class="field">
+            <label for="course">Course of study</label>
+            <select id="course" required>
+              <option value="">Select course</option>
+            </select>
+          </div>
+
+        </div><!-- /.fields -->
+
+        <button class="btn-submit" type="submit" id="submit-btn">
+          Enter chat &#8594;
+        </button>
+        <div id="message" class="message"></div>
+
+      </form>
+    </div><!-- /.form-card -->
+
+    <p class="legal-note">
+      By continuing you agree to our
+      <a href="terms.html" target="_blank">Terms of Service</a> and
+      <a href="privacy.html" target="_blank">Privacy Policy</a>.
+    </p>
+
+  </main>
+
+  <script>
+    // ── Config ──────────────────────────────────────────────────
+    const API_BASE    = 'https://uds-ttfpp-whatsapp-bot.elitetransportghana.workers.dev';
+    const THEME_KEY   = 'elite_theme_v1';
+    const TOKEN_KEY   = 'elite_sb_token_v1';
+    const PROFILE_KEY = 'elite_user_profile_v1';
+    const PENDING_KEY = 'elite_pending_user_v1';
+
+    // ── Theme ───────────────────────────────────────────────────
+    const themeButtons = [...document.querySelectorAll('[data-theme-mode]')];
+    function applyTheme(theme) {
+      if (theme === 'system') document.documentElement.removeAttribute('data-theme');
+      else document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem(THEME_KEY, theme);
+      themeButtons.forEach(b => b.classList.toggle('active', b.dataset.themeMode === theme));
+    }
+    function initTheme() { applyTheme(localStorage.getItem(THEME_KEY) || 'system'); }
+    themeButtons.forEach(b => b.addEventListener('click', () => applyTheme(b.dataset.themeMode)));
+    initTheme();
+
+    // ── Auth guard ──────────────────────────────────────────────
+    // Retrieve pendingUser (written by landing.html before redirect)
+    let pendingUser = null;
+    try { pendingUser = JSON.parse(sessionStorage.getItem(PENDING_KEY) || 'null'); } catch (_) {}
+
+    if (!pendingUser) {
+      // Page refreshed or direct visit — try to reconstruct from stored token
+      const tokenRaw = sessionStorage.getItem(TOKEN_KEY) || localStorage.getItem(TOKEN_KEY);
+      if (!tokenRaw) {
+        window.location.replace('landing.html');
+      } else {
+        try {
+          const stored = JSON.parse(tokenRaw);
+          if (stored.access_token) {
+            // Check token not expired
+            const parts = stored.access_token.split('.');
+            if (parts.length === 3) {
+              const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+              if (payload.exp && Math.floor(Date.now() / 1000) >= payload.exp) {
+                window.location.replace('landing.html');
+              }
+            }
+            pendingUser = { id: stored.user_id || '', email: '', name: '', token: stored.access_token };
+          } else {
+            window.location.replace('landing.html');
+          }
+        } catch (_) {
+          window.location.replace('landing.html');
+        }
+      }
+    }
+
+    // ── Helpers ─────────────────────────────────────────────────
+    const messageEl = document.getElementById('message');
+    const submitBtn = document.getElementById('submit-btn');
+    function setMessage(text, ok = false) {
+      messageEl.textContent = text || '';
+      messageEl.className = ok ? 'message ok' : 'message';
+    }
+
+    function goChat() { window.location.href = 'chat.html'; }
+
+    async function syncUserToServer(userId, name, email, meta, token) {
+      try {
+        await fetch(`${API_BASE}/api/platform/users/sync`, {
+          method:  'POST',
+          headers: {
+            'Content-Type':  'application/json',
+            ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+          },
+          body: JSON.stringify({
+            user_id:       userId,
+            full_name:     name,
+            email,
+            auth_provider: 'supabase',
+            age:           meta.age    || '',
+            course:        meta.course || '',
+            level:         meta.level  || '',
+            gender:        meta.gender || '',
+            region:        meta.region || '',
+            phone:         meta.phone  || ''
+          })
+        });
+      } catch (_) { /* non-blocking */ }
+    }
+
+    // ── Tom Select initialisation ───────────────────────────────
+    // Tom Select options shared across all single selects
+    const tsOptions = {
+      create: false,
+      sortField: false,          // keep original order for level; sort others later
+      placeholder: 'Type to search\u2026',
+      allowEmptyOption: false,
+      closeAfterSelect: true,
+      highlight: true,
+      selectOnTab: true,
+    };
+
+    // Init level (keep numerical order)
+    const tsLevel = new TomSelect('#level', { ...tsOptions });
+
+    // Init gender (short list, no sorting needed)
+    const tsGender = new TomSelect('#gender', { ...tsOptions });
+
+    // Init region (alphabetical — already sorted in HTML)
+    const tsRegion = new TomSelect('#region', { ...tsOptions, sortField: { field: 'text', direction: 'asc' } });
+
+    // Course: populate from API then init
+    let tsCourse = null;
+    async function fetchAndInitCourse() {
+      const sel = document.getElementById('course');
+      try {
+        const resp = await fetch(`${API_BASE}/api/platform/courses`);
+        const data = await resp.json();
+        if (data.ok && data.courses) {
+          data.courses.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = opt.textContent = c.name;
+            sel.appendChild(opt);
+          });
+        }
+      } catch (_) {}
+      tsCourse = new TomSelect('#course', {
+        ...tsOptions,
+        sortField: { field: 'text', direction: 'asc' },
+        placeholder: 'Search your course\u2026',
+      });
+    }
+    fetchAndInitCourse();
+
+    // ── Form submit ─────────────────────────────────────────────
+    document.getElementById('onboarding-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!pendingUser) { window.location.replace('landing.html'); return; }
+
+      const age    = document.getElementById('age').value.trim();
+      const phone  = document.getElementById('phone').value.trim();
+      const level  = tsLevel.getValue();
+      const gender = tsGender.getValue();
+      const region = tsRegion.getValue();
+      const course = tsCourse ? tsCourse.getValue() : document.getElementById('course').value;
+
+      if (!age || !phone || !level || !gender || !region || !course) {
+        setMessage('Please complete all fields before continuing.');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Saving\u2026';
+      setMessage('');
+
+      const meta = { age, course, level, gender, region, phone };
+
+      // 1. Persist into Supabase user_metadata via worker
+      try {
+        const updateResp = await fetch(`${API_BASE}/api/auth/update-user`, {
+          method:  'POST',
+          headers: {
+            'Content-Type':  'application/json',
+            'Authorization': `Bearer ${pendingUser.token}`
+          },
+          body: JSON.stringify({ data: meta })
+        });
+        const updateData = await updateResp.json();
+        if (!updateData.ok) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Enter chat \u2192';
+          setMessage(updateData.error || 'Could not save profile. Try again.');
+          return;
+        }
+      } catch (_) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enter chat \u2192';
+        setMessage('Network error. Please check your connection and try again.');
+        return;
+      }
+
+      // 2. Cache profile locally
+      localStorage.setItem(PROFILE_KEY, JSON.stringify({
+        name:   pendingUser.name,
+        email:  pendingUser.email,
+        age, course, level, gender, region, phone
+      }));
+
+      // 3. Sync to D1 (non-blocking)
+      syncUserToServer(pendingUser.id, pendingUser.name, pendingUser.email, meta, pendingUser.token);
+
+      // 4. Clear pending user from session storage
+      sessionStorage.removeItem(PENDING_KEY);
+
+      setMessage('Profile saved! Redirecting\u2026', true);
+      setTimeout(goChat, 400);
+    });
+  </script>
+</body>
+</html>

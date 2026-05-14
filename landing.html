@@ -1,0 +1,1170 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-store, private" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <title>Elite Bot | Sign in</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:          #f5f5f0;
+      --bg-soft:     #efefe9;
+      --panel:       #ffffff;
+      --border:      rgba(0,0,0,0.09);
+      --text:        #0d0d0d;
+      --muted:       rgba(13,13,13,0.52);
+      --accent:      #000000;
+      --accent-soft: rgba(0,0,0,0.06);
+      --ok:          #1f7a4d;
+      --surface:     rgba(0,0,0,0.04);
+      --chip-border: rgba(0,0,0,0.10);
+      --brand-text:  #ffffff;
+      --shadow-btn:  0 1px 3px rgba(0,0,0,0.18);
+      --radius-sm:   12px;
+      --left-bg:     #0d0d0d;
+      --left-text:   #f5f5f0;
+      --left-muted:  rgba(245,245,240,0.52);
+      --left-border: rgba(255,255,255,0.10);
+    }
+
+    [data-theme="dark"] {
+      --bg:          #212121;
+      --bg-soft:     #1b1b1b;
+      --panel:       #2a2a2a;
+      --border:      rgba(255,255,255,0.08);
+      --text:        #ececec;
+      --muted:       rgba(236,236,236,0.50);
+      --accent:      #ffffff;
+      --accent-soft: rgba(255,255,255,0.08);
+      --ok:          #7ad29c;
+      --surface:     rgba(255,255,255,0.05);
+      --chip-border: rgba(255,255,255,0.10);
+      --brand-text:  #0d0d0d;
+      --shadow-btn:  0 1px 3px rgba(0,0,0,0.40);
+      --left-bg:     #1a1a1a;
+      --left-text:   #ececec;
+      --left-muted:  rgba(236,236,236,0.45);
+      --left-border: rgba(255,255,255,0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) {
+        --bg: #212121; --bg-soft: #1b1b1b; --panel: #2a2a2a;
+        --border: rgba(255,255,255,0.08); --text: #ececec;
+        --muted: rgba(236,236,236,0.50); --accent: #ffffff;
+        --accent-soft: rgba(255,255,255,0.08); --ok: #7ad29c;
+        --surface: rgba(255,255,255,0.05); --chip-border: rgba(255,255,255,0.10);
+        --brand-text: #0d0d0d; --shadow-btn: 0 1px 3px rgba(0,0,0,0.40);
+        --left-bg: #1a1a1a; --left-text: #ececec;
+        --left-muted: rgba(236,236,236,0.45); --left-border: rgba(255,255,255,0.08);
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: "Manrope", "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Split layout ── */
+    .page {
+      min-height: 100dvh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* ── Left brand panel ── */
+    .brand-panel {
+      background: var(--left-bg);
+      color: var(--left-text);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 44px 52px;
+      position: relative;
+      overflow: hidden;
+    }
+    .brand-panel::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 20% 10%, rgba(255,255,255,0.055), transparent),
+        radial-gradient(ellipse 50% 45% at 85% 90%, rgba(255,255,255,0.03), transparent);
+      pointer-events: none;
+    }
+    .brand-logo {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .brand-icon {
+      width: 42px; height: 42px; border-radius: 13px;
+      border: 1px solid var(--left-border);
+      background: rgba(255,255,255,0.07);
+      display: grid; place-items: center;
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 19px; color: var(--left-text); flex-shrink: 0;
+    }
+    .brand-wordmark {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 19px; font-weight: 400; letter-spacing: -0.3px;
+    }
+    .brand-body { position: relative; z-index: 1; }
+    .brand-tag {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--left-muted); margin-bottom: 18px;
+    }
+    .brand-headline {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(34px, 3.5vw, 50px);
+      font-weight: 300; line-height: 1.07; letter-spacing: -1px;
+      margin-bottom: 20px;
+    }
+    .brand-headline em { font-style: italic; opacity: 0.7; }
+    .brand-sub {
+      font-size: 15px; line-height: 1.65;
+      color: var(--left-muted); max-width: 340px;
+    }
+    .brand-footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--left-border);
+      padding-top: 28px;
+      display: flex; gap: 32px;
+    }
+    .stat-item { display: flex; flex-direction: column; gap: 3px; }
+    .stat-num {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 24px; font-weight: 400; letter-spacing: -0.4px;
+    }
+    .stat-label { font-size: 11px; color: var(--left-muted); }
+
+    /* ── Right auth panel ── */
+    .auth-panel {
+      background: var(--bg);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 44px 52px;
+      overflow-y: auto; position: relative;
+    }
+    .auth-card { width: 100%; max-width: 400px; }
+
+    .theme-switcher {
+      position: absolute; top: 22px; right: 22px;
+      display: flex; gap: 5px;
+    }
+    .theme-btn {
+      border: 1px solid var(--chip-border);
+      background: var(--panel); color: var(--text);
+      border-radius: 999px; padding: 7px 12px;
+      font-size: 11px; font-weight: 600; cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .theme-btn.active {
+      background: var(--accent); color: var(--brand-text);
+      border-color: var(--accent);
+    }
+
+    /* ── Tabs ── */
+    .tabs {
+      display: flex; gap: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 4px; margin-bottom: 22px;
+    }
+    .tab {
+      flex: 1; border: none; background: transparent;
+      color: var(--muted); font-family: inherit;
+      font-size: 13px; font-weight: 600;
+      padding: 9px 14px; border-radius: 8px;
+      cursor: pointer; transition: background 0.15s, color 0.15s;
+    }
+    .tab.active {
+      background: var(--panel); color: var(--text);
+      box-shadow: var(--shadow-btn);
+    }
+
+    /* ── Google btn ── */
+    .google-btn {
+      width: 100%;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--panel); color: var(--text);
+      font-family: inherit; font-size: 14px; font-weight: 600;
+      padding: 13px 18px; cursor: pointer;
+      box-shadow: var(--shadow-btn);
+      transition: box-shadow 0.15s;
+      margin-bottom: 16px;
+    }
+    .google-btn:hover { box-shadow: 0 3px 14px rgba(0,0,0,0.12); }
+    .google-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+    .g-icon { width: 18px; height: 18px; flex-shrink: 0; }
+
+    /* ── Divider ── */
+    .divider {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--muted); font-size: 12px; font-weight: 500;
+      margin-bottom: 16px;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+
+    /* ── Form ── */
+    form { margin: 0; }
+    .fields { display: flex; flex-direction: column; gap: 11px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+    .field { display: flex; flex-direction: column; gap: 5px; }
+    label {
+      font-size: 12px; font-weight: 600;
+      color: var(--muted); letter-spacing: 0.02em;
+    }
+    input, select {
+      width: 100%;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text); font-family: inherit;
+      font-size: 14px; padding: 12px 14px;
+      outline: none; box-shadow: var(--shadow-btn);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    input:focus, select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+    select { cursor: pointer; }
+
+    /* ── Buttons (keep .btn.primary for JS selectors) ── */
+    .btn.primary {
+      width: 100%; border: none;
+      border-radius: var(--radius-sm);
+      background: var(--accent); color: var(--brand-text);
+      font-family: inherit; font-size: 14px; font-weight: 700;
+      padding: 14px 18px; cursor: pointer;
+      margin-top: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.22);
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .btn.primary:hover { opacity: 0.86; }
+    .btn.primary:active { transform: scale(0.99); }
+    .btn.primary:disabled { opacity: 0.48; cursor: not-allowed; }
+    .btn.subtle {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: none; border: none;
+      color: var(--muted); font-family: inherit;
+      font-size: 13px; font-weight: 500;
+      cursor: pointer; padding: 10px 0; margin-top: 4px;
+    }
+    .btn.subtle:hover { color: var(--text); }
+
+    /* ── Step / title ── */
+    .step-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
+    }
+    #card-title {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 24px; font-weight: 400;
+      letter-spacing: -0.4px; margin-bottom: 22px;
+    }
+
+    /* ── Message ── */
+    .message {
+      font-size: 13px; color: var(--muted);
+      margin-top: 12px; min-height: 18px; line-height: 1.45;
+    }
+    .message.ok { color: var(--ok); }
+    .hidden { display: none !important; }
+
+    /* ── Legal footnote ── */
+    .legal-note {
+      font-size: 11px; color: var(--muted); text-align: center;
+      margin-top: 18px; line-height: 1.6;
+    }
+    .legal-note a {
+      color: var(--muted); text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .legal-note a:hover { color: var(--text); }
+
+    /* ── Logo ── */
+    .brand-logo-img {
+      width: 40px; height: 40px; object-fit: contain; flex-shrink: 0;
+    }
+    .auth-logo-wrap {
+      display: flex; justify-content: center;
+      margin-bottom: 22px;
+    }
+    .auth-logo-wrap img {
+      width: 52px; height: 52px; object-fit: contain;
+    }
+    /* light mode → dark logo; dark mode → white logo */
+    .auth-logo-dark  { display: block; }
+    .auth-logo-light { display: none; }
+    [data-theme="dark"] .auth-logo-dark  { display: none; }
+    [data-theme="dark"] .auth-logo-light { display: block; }
+    @media (prefers-color-scheme: dark) {
+      html:not([data-theme]) .auth-logo-dark  { display: none; }
+      html:not([data-theme]) .auth-logo-light { display: block; }
+    }
+
+    /* ── Brand panel animations ─────────────────────────────── */
+    @keyframes panelShimmer {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .brand-panel {
+      background: var(--left-bg);
+      background-image: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(255,255,255,0.06), transparent),
+                        radial-gradient(ellipse 55% 50% at 85% 90%, rgba(255,255,255,0.035), transparent);
+    }
+
+    /* Staggered entrance — panel children fade + slide up */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .brand-logo   { animation: fadeUp 0.55s ease both; animation-delay: 0.05s; }
+    .brand-tag    { animation: fadeUp 0.55s ease both; animation-delay: 0.18s; }
+    .brand-headline { animation: fadeUp 0.55s ease both; animation-delay: 0.30s; }
+    .brand-sub    { animation: fadeUp 0.55s ease both; animation-delay: 0.42s; }
+    .brand-footer { animation: fadeUp 0.55s ease both; animation-delay: 0.54s; }
+
+    /* Cycling word in headline */
+    .cycle-word {
+      display: inline-block;
+      position: relative;
+      font-style: italic;
+      opacity: 0.85;
+      min-width: 2ch;          /* prevent layout shift */
+    }
+    @keyframes wordIn {
+      from { opacity: 0; transform: translateY(12px) skewX(-4deg); }
+      to   { opacity: 1; transform: translateY(0)    skewX(0deg); }
+    }
+    @keyframes wordOut {
+      from { opacity: 1; transform: translateY(0)    skewX(0deg); }
+      to   { opacity: 0; transform: translateY(-12px) skewX(4deg); }
+    }
+    .cycle-word.leaving  { animation: wordOut 0.28s ease forwards; }
+    .cycle-word.entering { animation: wordIn  0.32s ease forwards; }
+
+    /* Stat counter pulse on entry */
+    @keyframes statPop {
+      0%   { transform: scale(0.8); opacity: 0; }
+      70%  { transform: scale(1.08); }
+      100% { transform: scale(1);   opacity: 1; }
+    }
+    .stat-num { animation: statPop 0.5s cubic-bezier(.34,1.56,.64,1) both; }
+    .stat-item:nth-child(1) .stat-num { animation-delay: 0.60s; }
+    .stat-item:nth-child(2) .stat-num { animation-delay: 0.72s; }
+    .stat-item:nth-child(3) .stat-num { animation-delay: 0.84s; }
+
+    /* Respect reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      .brand-logo, .brand-tag, .brand-headline,
+      .brand-sub, .brand-footer, .stat-num {
+        animation: none;
+      }
+      .cycle-word.leaving, .cycle-word.entering {
+        animation: none;
+      }
+    }
+
+    /* ── Reduce tap-highlight on touch devices ── */
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    /* ────────────────────────────────────────────────────────────
+       MOBILE  ≤ 860 px
+       Brand panel → full-screen hero
+       Auth panel  → slide-up bottom sheet
+       ──────────────────────────────────────────────────────────── */
+
+    /* ── Mobile-only elements (hidden on desktop) ── */
+    .hero-cta-wrap { display: none; }
+    .sheet-handle  { display: none; }
+
+    /* ── Extra keyframes for mobile effects ── */
+    @keyframes livePulse {
+      0%, 100% { box-shadow: 0 0 7px #4ade80, 0 0 14px rgba(74,222,128,0.55); }
+      50%       { box-shadow: 0 0 3px #4ade80, 0 0 6px  rgba(74,222,128,0.25); }
+    }
+    @keyframes heroBtnGlow {
+      0%, 100% { box-shadow: 0 0 0 0px  rgba(255,255,255,0.55), 0 10px 40px rgba(0,0,0,0.4); }
+      55%       { box-shadow: 0 0 0 16px rgba(255,255,255,0),    0 10px 40px rgba(0,0,0,0.4); }
+    }
+    @keyframes btnShimmer {
+      from { transform: translateX(-220%); }
+      to   { transform: translateX(420%);  }
+    }
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+
+    /* ────────────────────────────────────────────────────────────
+       MOBILE  ≤ 860 px  —  Full-screen hero + bottom-sheet auth
+       ──────────────────────────────────────────────────────────── */
+    @media (max-width: 860px) {
+      html, body { height: 100%; overflow: hidden; }
+
+      .page { display: block; height: 100dvh; overflow: hidden; }
+
+      /* ── Full-screen hero ── */
+      .brand-panel {
+        position: fixed;
+        inset: 0;
+        height: 100dvh;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: max(52px, env(safe-area-inset-top, 52px)) 28px
+                 max(52px, env(safe-area-inset-bottom, 52px));
+        gap: 0;
+        overflow: hidden;
+        /* Vivid colour-glow orbs */
+        background-image:
+          radial-gradient(ellipse 75% 55% at 92%  5%, rgba(124, 58,237,0.26) 0%, transparent 60%),
+          radial-gradient(ellipse 60% 45% at  5% 95%, rgba(245,158, 11,0.20) 0%, transparent 60%),
+          radial-gradient(ellipse 90% 70% at 50% 50%, rgba(255,255,255,0.03) 0%, transparent 70%);
+      }
+
+      .brand-logo {
+        margin-bottom: 0;
+        animation: heroFadeUp 0.5s ease both 0.05s;
+      }
+
+      .brand-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 24px 0 16px;
+        animation: heroFadeUp 0.5s ease both 0.18s;
+      }
+
+      /* Tag → live pill badge */
+      .brand-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.14);
+        border-radius: 999px;
+        padding: 5px 14px 5px 10px;
+        font-size: 10px;
+        letter-spacing: 0.13em;
+        color: rgba(245,245,240,0.8);
+        margin-bottom: 20px;
+        width: fit-content;
+      }
+      .brand-tag::before {
+        content: '';
+        width: 7px; height: 7px;
+        background: #4ade80;
+        border-radius: 50%;
+        animation: livePulse 2.5s ease-in-out infinite;
+        flex-shrink: 0;
+      }
+
+      .brand-headline {
+        font-size: clamp(34px, 9.5vw, 50px);
+        letter-spacing: -1.4px;
+        margin-bottom: 16px;
+        line-height: 1.02;
+      }
+
+      /* Cycle-word gets a purple → gold gradient */
+      .cycle-word {
+        background: linear-gradient(110deg, #d8b4fe 0%, #a78bfa 45%, #fcd34d 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-style: italic;
+      }
+
+      .brand-sub {
+        font-size: 14px;
+        max-width: 100%;
+        line-height: 1.65;
+        color: rgba(245,245,240,0.58);
+      }
+
+      /* Stats — centred items with gradient rule + separators */
+      .brand-footer {
+        padding-top: 20px;
+        border-top: none;
+        gap: 0;
+        margin-bottom: 22px;
+        flex-wrap: nowrap;
+        position: relative;
+        animation: heroFadeUp 0.5s ease both 0.34s;
+      }
+      .brand-footer::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 1px;
+        background: linear-gradient(90deg,
+          transparent 0%,
+          rgba(255,255,255,0.22) 25%,
+          rgba(255,255,255,0.22) 75%,
+          transparent 100%);
+      }
+      .stat-item {
+        flex: 1;
+        align-items: center;
+        padding: 0 6px;
+        gap: 2px;
+        position: relative;
+      }
+      .stat-item + .stat-item::before {
+        content: '';
+        position: absolute;
+        left: 0; top: 50%;
+        transform: translateY(-50%);
+        width: 1px; height: 26px;
+        background: rgba(255,255,255,0.16);
+      }
+      .stat-num   { font-size: 22px; }
+      .stat-label { font-size: 10px; letter-spacing: 0.04em; }
+
+      /* ── Get Started CTA ── */
+      .hero-cta-wrap {
+        display: block;
+        width: 100%;
+        animation: heroFadeUp 0.5s ease both 0.46s;
+      }
+      .hero-cta {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 0 28px;
+        background: #ffffff;
+        color: #0d0d0d;
+        border: none;
+        border-radius: 999px;      /* pill */
+        font-family: inherit;
+        font-size: 17px;
+        font-weight: 800;
+        letter-spacing: -0.3px;
+        cursor: pointer;
+        min-height: 62px;
+        position: relative;
+        overflow: hidden;
+        touch-action: manipulation;
+        transition: opacity 0.15s, transform 0.15s;
+        animation: heroBtnGlow 3.5s ease-in-out infinite 1.2s;
+      }
+      /* Shimmer sweep */
+      .hero-cta::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        width: 45%;
+        background: linear-gradient(90deg,
+          transparent, rgba(255,255,255,0.38), transparent);
+        transform: translateX(-220%);
+        animation: btnShimmer 3.5s ease-in-out infinite 2.2s;
+      }
+      .hero-cta:active { opacity: 0.9; transform: scale(0.975); }
+      .hero-cta-label { position: relative; z-index: 1; }
+      .hero-cta-arrow {
+        width: 30px; height: 30px;
+        background: #0d0d0d;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+        position: relative; z-index: 1;
+        transition: transform 0.2s ease;
+      }
+      .hero-cta:active .hero-cta-arrow { transform: translateX(3px); }
+      .hero-cta-arrow svg { display: block; }
+
+      /* Hint below CTA */
+      .hero-cta-sub {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 14px;
+        font-size: 11px;
+        color: rgba(245,245,240,0.42);
+        letter-spacing: 0.02em;
+      }
+      .hero-cta-sub::before,
+      .hero-cta-sub::after {
+        content: '';
+        flex: 1;
+        max-width: 50px;
+        height: 1px;
+        background: rgba(245,245,240,0.14);
+      }
+
+      /* ── Sheet backdrop ── */
+      .sheet-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.6);
+        z-index: 199;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.35s ease;
+        -webkit-backdrop-filter: blur(3px);
+        backdrop-filter: blur(3px);
+      }
+      .sheet-backdrop.visible { opacity: 1; pointer-events: auto; }
+
+      /* ── Auth bottom sheet ── */
+      .auth-panel {
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        height: auto;
+        max-height: 92dvh;
+        background: var(--bg);
+        border-radius: 24px 24px 0 0;
+        box-shadow: 0 -12px 60px rgba(0,0,0,0.22);
+        z-index: 200;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 24px max(32px, env(safe-area-inset-bottom, 32px));
+        transform: translateY(100%);
+        transition: transform 0.42s cubic-bezier(0.32, 0.72, 0, 1);
+      }
+      .auth-panel.sheet-open { transform: translateY(0); }
+
+      /* Drag handle */
+      .sheet-handle {
+        display: block;
+        width: 40px; height: 5px;
+        background: var(--border);
+        border-radius: 999px;
+        margin: 14px auto 20px;
+        flex-shrink: 0;
+      }
+
+      /* Theme switcher inside sheet */
+      .theme-switcher { position: absolute; top: 14px; right: 20px; gap: 3px; }
+      .theme-btn { padding: 5px 9px; font-size: 11px; min-height: 32px; }
+
+      .auth-card { max-width: 100%; padding-top: 8px; }
+      .auth-logo-wrap { display: none; }
+      #card-title { font-size: 22px; margin-bottom: 18px; }
+
+      input, select { padding: 13px 14px; font-size: 16px; min-height: 48px; }
+      .btn.primary  { padding: 15px 18px; font-size: 15px; min-height: 50px; touch-action: manipulation; }
+      .google-btn   { padding: 14px 18px; min-height: 50px; touch-action: manipulation; }
+      .tab          { padding: 11px 14px; min-height: 44px; touch-action: manipulation; }
+    }
+
+    /* ────────────────────────────────────────────────────────────
+       SMALL PHONES  ≤ 480 px
+       ──────────────────────────────────────────────────────────── */
+    @media (max-width: 480px) {
+      .brand-panel {
+        padding-left:  max(22px, env(safe-area-inset-left, 22px));
+        padding-right: max(22px, env(safe-area-inset-right, 22px));
+      }
+      .brand-wordmark { font-size: 16px; }
+      .brand-logo-img { width: 32px; height: 32px; }
+      .brand-headline { font-size: clamp(30px, 8.5vw, 42px); }
+      .auth-panel {
+        padding-left:  max(18px, env(safe-area-inset-left, 18px));
+        padding-right: max(18px, env(safe-area-inset-right, 18px));
+      }
+      .row { grid-template-columns: 1fr; }
+      #card-title { font-size: 20px; }
+      .tabs { margin-bottom: 18px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── Left: Brand ── -->
+  <div class="brand-panel">
+    <div class="brand-logo">
+      <img src="assets/EL 1.png" alt="Elite Bot" class="brand-logo-img" />
+      <span class="brand-wordmark">Elite Bot</span>
+    </div>
+
+    <div class="brand-body">
+      <p class="brand-tag">UDS TTFPP Assistant</p>
+      <h2 class="brand-headline">Your guide to<br><span class="cycle-word" id="cycle-word">field placement,</span><br>done right.</h2>
+      <p class="brand-sub">Ask questions, generate reports, track placements &mdash; powered by AI trained specifically for UDS students on TTFPP.</p>
+    </div>
+
+    <div class="brand-footer">
+      <div class="stat-item">
+        <span class="stat-num">24/7</span>
+        <span class="stat-label">Always available</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">AI</span>
+        <span class="stat-label">Powered answers</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">UDS</span>
+        <span class="stat-label">Built for students</span>
+      </div>
+    </div>
+
+    <!-- Mobile CTA (hidden on desktop) -->
+    <div class="hero-cta-wrap">
+      <button class="hero-cta" id="hero-cta-btn" type="button" aria-label="Get started">
+        <span class="hero-cta-label">Get Started</span>
+        <span class="hero-cta-arrow">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </button>
+      <span class="hero-cta-sub">Sign in or create a free account</span>
+    </div>
+  </div>
+
+  <!-- Sheet backdrop (mobile) -->
+  <div class="sheet-backdrop" id="sheet-backdrop" aria-hidden="true"></div>
+
+  <!-- ── Right: Auth ── -->
+  <div class="auth-panel" id="auth-panel" role="dialog" aria-modal="true" aria-label="Sign in">
+
+    <div class="theme-switcher" role="group" aria-label="Theme">
+      <button class="theme-btn" type="button" data-theme-mode="system">System</button>
+      <button class="theme-btn active" type="button" data-theme-mode="light">Light</button>
+      <button class="theme-btn" type="button" data-theme-mode="dark">Dark</button>
+    </div>
+
+    <!-- Sheet drag handle (mobile only, hidden on desktop via CSS) -->
+    <div class="sheet-handle" aria-hidden="true"></div>
+
+    <div class="auth-card">
+
+      <div class="auth-logo-wrap">
+        <!-- dark logo for light mode -->
+        <img src="assets/El light.png" alt="Elite Bot" class="auth-logo-dark" />
+        <!-- white logo for dark mode -->
+        <img src="assets/EL 1.png" alt="Elite Bot" class="auth-logo-light" />
+      </div>
+
+      <h2 id="card-title">Welcome back</h2>
+
+      <div class="tabs">
+        <button id="tab-signin" class="tab active" type="button">Sign in</button>
+        <button id="tab-create" class="tab" type="button">Create account</button>
+      </div>
+
+      <button id="google-auth-btn" class="google-btn" type="button">
+        <svg class="g-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        <strong>Continue with Google</strong>
+      </button>
+
+      <div class="divider">or continue with email</div>
+
+      <form id="auth-form">
+        <div class="fields">
+          <div class="field hidden" id="name-field">
+            <label for="name">Full name</label>
+            <input id="name" type="text" autocomplete="name" placeholder="e.g. Emmanuel Armah" />
+          </div>
+          <div class="field">
+            <label for="email">Email address</label>
+            <input id="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" type="password" autocomplete="current-password" placeholder="Enter your password" required />
+          </div>
+        </div>
+        <button class="btn primary" type="submit">Sign in</button>
+      </form>
+
+      <div id="message" class="message"></div>
+
+      <p class="legal-note">
+        By continuing you agree to our
+        <a href="terms.html" target="_blank">Terms of Service</a> and
+        <a href="privacy.html" target="_blank">Privacy Policy</a>.
+      </p>
+
+    </div>
+  </div>
+</div>
+
+  <script>
+    // â”€â”€ Config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const API_BASE = 'https://uds-ttfpp-whatsapp-bot.elitetransportghana.workers.dev';
+    const PROFILE_KEY   = 'elite_user_profile_v1';
+    const THEME_KEY     = 'elite_theme_v1';
+    const USER_ID_KEY   = 'elite_user_id_v1';
+    const TOKEN_KEY     = 'elite_sb_token_v1';
+
+    // â”€â”€ DOM refs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    const tabSignin      = document.getElementById('tab-signin');
+    const tabCreate      = document.getElementById('tab-create');
+    const nameField      = document.getElementById('name-field');
+    const cardTitle      = document.getElementById('card-title');
+    const authForm       = document.getElementById('auth-form');
+    const messageEl      = document.getElementById('message');
+    const authSubmitBtn  = authForm.querySelector('.btn.primary');
+    const themeButtons   = [...document.querySelectorAll('[data-theme-mode]')];
+    const googleAuthBtn  = document.getElementById('google-auth-btn');
+
+    let mode        = 'signin';
+    let pendingUser = null; // { id, email, name } â€” set after auth, before onboarding
+
+    // â”€â”€ Theme â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    function applyTheme(theme) {
+      if (theme === 'system') document.documentElement.removeAttribute('data-theme');
+      else document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem(THEME_KEY, theme);
+      themeButtons.forEach(b => b.classList.toggle('active', b.dataset.themeMode === theme));
+    }
+    function initTheme() {
+      applyTheme(localStorage.getItem(THEME_KEY) || 'system');
+    }
+
+    // â”€â”€ UI helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    function setMessage(text, ok = false) {
+      messageEl.textContent = text || '';
+      messageEl.className = ok ? 'message ok' : 'message';
+    }
+    function setLoading(loading) {
+      authSubmitBtn.disabled = loading;
+      googleAuthBtn.disabled = loading;
+      authSubmitBtn.textContent = loading
+        ? 'Please waitâ€¦'
+        : mode === 'create' ? 'Create account' : 'Login and open chat';
+    }
+    function setMode(nextMode) {
+      mode = nextMode;
+      tabSignin.classList.toggle('active', mode === 'signin');
+      tabCreate.classList.toggle('active', mode === 'create');
+      nameField.classList.toggle('hidden', mode !== 'create');
+      authSubmitBtn.textContent = mode === 'create' ? 'Create account' : 'Login and open chat';
+      setMessage('');
+      cardTitle.textContent = mode === 'create' ? 'Create your account' : 'Login to continue';
+      googleAuthBtn.querySelector('strong').textContent = mode === 'create' ? 'Sign up with Google' : 'Login with Google';
+    }
+    function toOnboarding() {
+      sessionStorage.setItem('elite_pending_user_v1', JSON.stringify(pendingUser));
+      window.location.href = 'onboarding.html';
+    }
+    function goChat() { window.location.href = 'chat.html'; }
+
+    // â”€â”€ Token helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    function saveTokens(data) {
+      const payload = JSON.stringify({
+        access_token:  data.access_token  || '',
+        refresh_token: data.refresh_token || '',
+        expires_at:    data.expires_at    || 0,
+        user_id:       (data.user && data.user.id) || ''
+      });
+      sessionStorage.setItem(TOKEN_KEY, payload);
+      localStorage.setItem(TOKEN_KEY,   payload);
+      if (data.user && data.user.id) {
+        localStorage.setItem(USER_ID_KEY, data.user.id);
+        sessionStorage.setItem(USER_ID_KEY, data.user.id);
+      }
+    }
+
+    // â”€â”€ After successful auth: decide onboarding vs. go straight to chat â”€â”€â”€â”€â”€â”€
+    function handleSession(data) {
+      if (!data || !data.access_token) return;
+      const user     = data.user || {};
+      const meta     = user.user_metadata || {};
+      const userId   = user.id || '';
+      const email    = user.email || '';
+      const fullName = meta.full_name || meta.name || email.split('@')[0].replace(/[._-]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+
+      saveTokens(data);
+
+      // Returning user â€” onboarding already done
+      if (meta.course && meta.level) {
+        localStorage.setItem(PROFILE_KEY, JSON.stringify({
+          name:   fullName, email,
+          age:    meta.age    || '',
+          course: meta.course || '',
+          level:  meta.level  || '',
+          gender: meta.gender || '',
+          region: meta.region || ''
+        }));
+        syncUserToServer(userId, fullName, email, meta, data.access_token);
+        goChat();
+        return;
+      }
+
+      // New user â†’ show onboarding
+      pendingUser = { id: userId, email, name: fullName, token: data.access_token };
+      toOnboarding();
+    }
+
+    // â”€â”€ Server sync (non-blocking) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    async function syncUserToServer(userId, name, email, meta = {}, token = '') {
+      try {
+        await fetch(`${API_BASE}/api/platform/users/sync`, {
+          method:  'POST',
+          headers: {
+            'Content-Type':  'application/json',
+            ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+          },
+          body: JSON.stringify({
+            user_id:       userId,
+            full_name:     name,
+            email,
+            auth_provider: 'supabase',
+            age:           meta.age    || '',
+            course:        meta.course || '',
+            level:         meta.level  || '',
+            gender:        meta.gender || '',
+            region:        meta.region || '',
+            phone:         meta.phone  || ''
+          })
+        });
+      } catch (_) { /* non-blocking */ }
+    }
+
+    // â”€â”€ PKCE helpers (pure JS, no library) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    function generateRandom(len) {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
+      return Array.from(crypto.getRandomValues(new Uint8Array(len || 43))).map(b => chars[b % chars.length]).join('');
+    }
+    async function sha256Base64Url(plain) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(plain));
+      return btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+
+    // â”€â”€ Check for OAuth callback (?code= in URL) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    (async function checkOAuthCallback() {
+      const params       = new URLSearchParams(window.location.search);
+      const code         = params.get('code');
+      const codeVerifier = sessionStorage.getItem('pkce_verifier');
+      if (!code || !codeVerifier) return;
+
+      // Clean URL immediately so refreshing doesn't re-try the code
+      history.replaceState({}, '', window.location.pathname);
+      sessionStorage.removeItem('pkce_verifier');
+
+      setMessage('Completing sign inâ€¦');
+      setLoading(true);
+      try {
+        const resp = await fetch(`${API_BASE}/api/auth/google/callback`, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({
+            code,
+            code_verifier: codeVerifier,
+            redirect_uri:  window.location.origin + window.location.pathname
+          })
+        });
+        const data = await resp.json();
+        if (!data.ok) { setMessage(data.error || 'Google sign in failed.'); setLoading(false); return; }
+        handleSession(data);
+      } catch (_) {
+        setMessage('Network error. Try again.'); setLoading(false);
+      }
+    })();
+
+    // â”€â”€ Check existing valid session in storage â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    (function checkExistingSession() {
+      const raw = sessionStorage.getItem(TOKEN_KEY) || localStorage.getItem(TOKEN_KEY);
+      if (!raw) return;
+      try {
+        const stored = JSON.parse(raw);
+        if (!stored.access_token) return;
+        const parts = stored.access_token.split('.');
+        if (parts.length === 3) {
+          const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+          if (payload.exp && Math.floor(Date.now() / 1000) < payload.exp) {
+            // Also require profile — if missing, chat.html would redirect back (infinite loop)
+            if (localStorage.getItem(PROFILE_KEY)) { goChat(); }
+            return;
+          }
+        }
+      } catch (_) {}
+    })();
+
+    // â”€â”€ Google OAuth â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    googleAuthBtn.addEventListener('click', async () => {
+      setMessage('');
+      try {
+        const codeVerifier  = generateRandom(43);
+        const codeChallenge = await sha256Base64Url(codeVerifier);
+        sessionStorage.setItem('pkce_verifier', codeVerifier);
+        const redirectUri = window.location.origin + window.location.pathname;
+        const resp = await fetch(
+          `${API_BASE}/api/auth/google?redirect_uri=${encodeURIComponent(redirectUri)}&code_challenge=${encodeURIComponent(codeChallenge)}&code_challenge_method=s256`
+        );
+        const data = await resp.json();
+        if (!data.ok || !data.url) { setMessage(data.error || 'Could not start Google sign in.'); return; }
+        window.location.href = data.url;
+      } catch (_) {
+        setMessage('Network error. Try again.');
+      }
+    });
+
+    // â”€â”€ Tab switches â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    tabSignin.addEventListener('click', () => setMode('signin'));
+    tabCreate.addEventListener('click', () => setMode('create'));
+    themeButtons.forEach(b => b.addEventListener('click', () => applyTheme(b.dataset.themeMode)));
+
+    // â”€â”€ Email auth form â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    authForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name     = document.getElementById('name').value.trim();
+      const email    = document.getElementById('email').value.trim().toLowerCase();
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) { setMessage('Enter your email and password.'); return; }
+      if (mode === 'create' && !name) { setMessage('Enter your full name.'); return; }
+
+      setLoading(true);
+      setMessage('');
+
+      if (mode === 'create') {
+        const resp = await fetch(`${API_BASE}/api/auth/signup`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body:   JSON.stringify({ email, password, name })
+        });
+        const data = await resp.json();
+        setLoading(false);
+        if (!data.ok) { setMessage(data.error || 'Signup failed.'); return; }
+        setMessage('Account created! Complete your profile below.', true);
+        handleSession(data);
+      } else {
+        const resp = await fetch(`${API_BASE}/api/auth/signin`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body:   JSON.stringify({ email, password })
+        });
+        const data = await resp.json();
+        setLoading(false);
+        if (!data.ok) { setMessage(data.error || 'Invalid email or password.'); return; }
+        handleSession(data);
+      }
+    });
+
+    initTheme();
+    setMode('signin');
+
+    // ── Cycling headline word ───────────────────────────────────
+    (function initCycleWord() {
+      const el = document.getElementById('cycle-word');
+      if (!el) return;
+      // Phrases that slot into "Your guide to ___, done right."
+      const words = [
+        'field placement,',
+        'supervision visits,',
+        'report writing,',
+        'your logbook,',
+        'every deadline,',
+        'TTFPP life,',
+      ];
+      let idx = 0;
+      // Only animate — don't cycle — if user prefers reduced motion
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      function cycle() {
+        idx = (idx + 1) % words.length;
+        // Leave animation
+        el.classList.add('leaving');
+        el.addEventListener('animationend', function onLeave() {
+          el.removeEventListener('animationend', onLeave);
+          el.textContent = words[idx];
+          el.classList.remove('leaving');
+          el.classList.add('entering');
+          el.addEventListener('animationend', function onEnter() {
+            el.removeEventListener('animationend', onEnter);
+            el.classList.remove('entering');
+          }, { once: true });
+        }, { once: true });
+      }
+
+      setInterval(cycle, 2600);
+    })();
+
+    // ── Mobile bottom-sheet ─────────────────────────────────────
+    (function initSheet() {
+      const panel    = document.getElementById('auth-panel');
+      const backdrop = document.getElementById('sheet-backdrop');
+      const ctaBtn   = document.getElementById('hero-cta-btn');
+      const handle   = panel ? panel.querySelector('.sheet-handle') : null;
+
+      function isMobile() { return window.innerWidth <= 860; }
+
+      function openSheet() {
+        if (!isMobile()) return;
+        panel.classList.add('sheet-open');
+        backdrop.classList.add('visible');
+        document.body.style.overflow = 'hidden';
+        // Focus first interactive element inside sheet
+        const first = panel.querySelector('button, input, select');
+        if (first) setTimeout(() => first.focus(), 440);
+      }
+
+      function closeSheet() {
+        panel.classList.remove('sheet-open');
+        backdrop.classList.remove('visible');
+        document.body.style.overflow = '';
+        if (ctaBtn) ctaBtn.focus();
+      }
+
+      if (ctaBtn)   ctaBtn.addEventListener('click', openSheet);
+      if (backdrop) backdrop.addEventListener('click', closeSheet);
+
+      // Swipe-down on handle or top area to close
+      if (handle) {
+        let startY = 0;
+        handle.addEventListener('touchstart', function(e) {
+          startY = e.touches[0].clientY;
+        }, { passive: true });
+        handle.addEventListener('touchend', function(e) {
+          if (e.changedTouches[0].clientY - startY > 40) closeSheet();
+        }, { passive: true });
+      }
+
+      // Swipe-down on the sheet itself (only from the very top)
+      if (panel) {
+        let sheetStartY = 0;
+        panel.addEventListener('touchstart', function(e) {
+          if (panel.scrollTop === 0) sheetStartY = e.touches[0].clientY;
+        }, { passive: true });
+        panel.addEventListener('touchend', function(e) {
+          if (panel.scrollTop === 0 && e.changedTouches[0].clientY - sheetStartY > 60) closeSheet();
+        }, { passive: true });
+      }
+
+      // Keyboard: Escape closes sheet
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && isMobile() && panel.classList.contains('sheet-open')) closeSheet();
+      });
+
+      // On desktop resize: reset sheet state (ensures no stuck state if browser resized)
+      window.addEventListener('resize', function() {
+        if (!isMobile()) {
+          panel.classList.remove('sheet-open');
+          backdrop.classList.remove('visible');
+          document.body.style.overflow = '';
+        }
+      });
+    })();
+</script>
+</body>
+</html>
